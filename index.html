@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeff Collections | Wholesale & Retail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-color: #1A2A3A; /* Deep Navy */
+            --accent-color: #D4AF37; /* Gold */
+            --bg-color: #F8F9FA; /* Off-white */
+            --text-dark: #333333;
+            --text-light: #FFFFFF;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        header {
+            background: linear-gradient(rgba(26, 42, 58, 0.8), rgba(26, 42, 58, 0.9)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--text-light);
+            text-align: center;
+            padding: 6rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: #b5952f;
+            transform: translateY(-3px);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 5rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            height: 250px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 42, 58, 0.8);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .gallery-item:hover .overlay {
+            transform: translateY(0);
+        }
+
+        /* Lightbox for Gallery */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            animation: zoomIn 0.3s ease;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Location / Map Section */
+        .location-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .location-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 3rem;
+        }
+
+        .location-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .location-info p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .location-info i {
+            color: var(--accent-color);
+            margin-top: 5px;
+        }
+
+        .map-container {
+            flex: 1;
+            min-width: 300px;
+            min-height: 400px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Can be expanded to a hamburger menu later */
+            header h1 { font-size: 2.5rem; }
+            section { padding: 3rem 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">JEFF COLLECTIONS</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#location">Find Us</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home">
+        <h1>Wholesale & Retail</h1>
+        <p>Your one-stop shop for quality shoes, bags, clothes, and household items at unbeatable prices.</p>
+        <a href="#gallery" class="btn">Explore Our Collection</a>
+    </header>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <h2 class="section-title">Our Store</h2>
+        <div class="gallery">
+            <!-- Make sure your image names match exactly (image1.jpg, image2.jpg, etc.) -->
+            <div class="gallery-item" onclick="openLightbox('image1.jpg')">
+                <img src="image1.jpg" alt="Bedding and Fabric">
+                <div class="overlay">Quality Bedding & Fabrics</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('image2.jpg')">
+                <img src="image2.jpg" alt="Shoes Collection">
+                <div class="overlay">Wide Range of Shoes</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('image3.jpg')">
+                <img src="image3.jpg" alt="Bags and Clothes">
+                <div class="overlay">Bags, Clothes & More</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('image4.jpg')">
+                <img src="image4.jpg" alt="Canvas Shoes">
+                <div class="overlay">Casual Canvas Shoes</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('image5.jpg')">
+                <img src="image5.jpg" alt="Shoe Shop Front">
+                <div class="overlay">Our Extensive Shoe Display</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('image6.jpg')">
+                <img src="image6.jpg" alt="Mannequins and Suitcases">
+                <div class="overlay">Apparel & Luggage</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('image7.jpg')">
+                <img src="image7.jpg" alt="Jeff Collection Storefront">
+                <div class="overlay">Jeff Collection Storefront</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox('image8.jpg')">
+                <img src="image8.jpg" alt="Luggage and Fabrics">
+                <div class="overlay">Suitcases & Textiles</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightbox-img" src="" alt="Zoomed Image">
+    </div>
+
+    <!-- Location Section -->
+    <section id="location">
+        <h2 class="section-title">Visit Our Store</h2>
+        <div class="location-container">
+            <div class="location-info">
+                <h3>Jeff Collections</h3>
+                <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong><br> Near Market Street, Kenol Petrol Station,<br> Ambwere Plaza, Wing B.</p>
+                <p><i class="fas fa-store"></i> <strong>Business Type:</strong><br> Wholesale & Retail (Shoes, Bags, Clothes, Bedding)</p>
+                <p><i class="fas fa-phone-alt"></i> <strong>Contact Us:</strong><br> 0723 672 718</p>
+                <p><i class="fas fa-clock"></i> <strong>Opening Hours:</strong><br> Mon - Sat: 8:00 AM - 6:00 PM</p>
+            </div>
+            
+            <div class="map-container">
+                <!-- Google Maps Embed for Ambwere Plaza, Kenol -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.880586539821!2d37.2635!3d-0.9723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f6c1c1c1c1c1c%3A0x1c1c1c1c1c1c1c1c!2sAmbwere%20Plaza%2C%20Kenol!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Jeff Collections Wholesale & Retail. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(imageSrc) {
+            lightbox.style.display = 'flex';
+            lightboxImg.src = imageSrc;
+            // Prevent scrolling when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            // Restore scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on Escape key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && lightbox.style.display === 'flex') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
